@@ -37,7 +37,16 @@ jobs:
 
       - name: Run tests with coverage
         if: matrix.php == '8.4'
-        run: php -d xdebug.mode=coverage vendor/bin/pest --coverage-clover=coverage.xml
+        run: |
+          set -e
+          if php -m | grep -q xdebug; then
+            php -d xdebug.mode=coverage -d xdebug.start_with_request=yes vendor/bin/pest --coverage-clover=coverage.xml
+          elif command -v phpdbg > /dev/null; then
+            phpdbg -qrr vendor/bin/pest --coverage-clover=coverage.xml
+          else
+            echo 'No coverage driver available. Install xdebug or phpdbg.'
+            exit 1
+          fi
 
       - name: SonarCloud analysis
         if: matrix.php == '8.4' && env.SONAR_TOKEN != ''
