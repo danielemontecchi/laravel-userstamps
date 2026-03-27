@@ -30,6 +30,7 @@ class LaravelUserstampsServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        //
+        // No container bindings are registered here.
+        // All package macros are bootstrapped in the boot() method.
     }
 }
