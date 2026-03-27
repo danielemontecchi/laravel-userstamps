@@ -48,13 +48,6 @@ jobs:
             exit 1
           fi
 
-      - name: SonarCloud analysis
-        if: matrix.php == '8.4' && env.SONAR_TOKEN != ''
-        uses: sonarsource/sonarcloud-github-action@ba3875ecf642b2129de2b589510c81a8b53dbf4e
-        with:
-          projectBaseDir: .
-          organization: danielemontecchi
-          projectKey: danielemontecchi_laravel-userstamps
-          token: ${{ env.SONAR_TOKEN }}
-          extraProperties: |
-            sonar.php.coverage.reportPaths=coverage.xml
+      # SonarCloud analysis is handled by SonarCloud automatic analysis for this project.
+      # Running the action here creates duplicate CI analysis and fails with exit code 3.
+      # If you want to re-enable manual analysis, disable automatic analysis in SonarCloud first.
