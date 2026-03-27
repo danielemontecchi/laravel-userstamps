@@ -48,6 +48,14 @@ jobs:
             exit 1
           fi
 
-      # SonarCloud analysis is handled by SonarCloud automatic analysis for this project.
-      # Running the action here creates duplicate CI analysis and fails with exit code 3.
-      # If you want to re-enable manual analysis, disable automatic analysis in SonarCloud first.
+      - name: SonarCloud analysis
+        if: matrix.php == '8.4' && env.SONAR_TOKEN != ''
+        uses: SonarSource/sonarqube-scan-action@v7
+        env:
+          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
+        with:
+          projectBaseDir: .
+          args: >
+            -Dsonar.organization=danielemontecchi
+            -Dsonar.projectKey=danielemontecchi_laravel-userstamps
+            -Dsonar.php.coverage.reportPaths=coverage.xml
