@@ -2,11 +2,12 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/danielemontecchi/laravel-userstamps.svg?style=flat-square)](https://packagist.org/packages/danielemontecchi/laravel-userstamps)
 [![Total Downloads](https://img.shields.io/packagist/dt/danielemontecchi/laravel-userstamps.svg?style=flat-square)](https://packagist.org/packages/danielemontecchi/laravel-userstamps)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.md)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/danielemontecchi/laravel-userstamps/tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/danielemontecchi/laravel-userstamps/actions/workflows/tests.yml)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=danielemontecchi_laravel-userstamps&metric=coverage)](https://sonarcloud.io/summary/new_code?id=danielemontecchi_laravel-userstamps)
 [![PHPStan](https://img.shields.io/badge/PHPStan-level%20max-brightgreen.svg?style=flat-square)](https://phpstan.org/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=danielemontecchi_laravel-userstamps&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=danielemontecchi_laravel-userstamps)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=danielemontecchi_laravel-userstamps&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=danielemontecchi_laravel-userstamps)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.md)
 [![Documentation](https://img.shields.io/badge/docs-available-brightgreen.svg?style=flat-square)](https://danielemontecchi.github.io/laravel-userstamps)
 
 **Laravel Userstamps** is a lightweight, plug-and-play package to automatically track the user who created, updated, or deleted an Eloquent model in Laravel.

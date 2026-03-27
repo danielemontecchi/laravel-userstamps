@@ -21,7 +21,8 @@ jobs:
         uses: shivammathur/setup-php@v4
         with:
           php-version: ${{ matrix.php }}
-          extensions: mbstring, bcmath, xml, pdo, pdo_sqlite
+          extensions: mbstring, bcmath, xml, pdo, pdo_sqlite, xdebug
+          coverage: xdebug
 
       - name: Validate composer files
         run: composer validate --strict
@@ -32,11 +33,17 @@ jobs:
       - name: Run tests
         run: composer test
 
+      - name: Run tests with coverage
+        if: matrix.php == '8.4'
+        run: php -d xdebug.mode=coverage vendor/bin/pest --coverage-clover=coverage.xml
+
       - name: SonarCloud analysis
-        if: secrets.SONAR_TOKEN != ''
+        if: matrix.php == '8.4' && secrets.SONAR_TOKEN != ''
         uses: sonarsource/sonarcloud-github-action@master
         with:
           projectBaseDir: .
           organization: danielemontecchi
           projectKey: danielemontecchi_laravel-userstamps
           token: ${{ secrets.SONAR_TOKEN }}
+          extraProperties: |
+            sonar.php.coverage.reportPaths=coverage.xml
