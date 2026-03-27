@@ -5,6 +5,7 @@
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/danielemontecchi/laravel-userstamps/tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/danielemontecchi/laravel-userstamps/actions/workflows/tests.yml)
 [![PHPStan](https://img.shields.io/badge/PHPStan-level%20max-brightgreen.svg?style=flat-square)](https://phpstan.org/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=danielemontecchi_laravel-userstamps&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=danielemontecchi_laravel-userstamps)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=danielemontecchi_laravel-userstamps&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=danielemontecchi_laravel-userstamps)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.md)
 [![Documentation](https://img.shields.io/badge/docs-available-brightgreen.svg?style=flat-square)](https://danielemontecchi.github.io/laravel-userstamps)
 
@@ -102,7 +103,7 @@ Post::enableUserstamps();
 ## 🔧 Requirements
 
 * PHP 8.1+
-* Laravel 10.x, 11.x, 12.x
+* Laravel 10.x, 11.x, 12.x, 13.x
 * A `users` table (or any custom user model)
 
 > Note: field names are not hardcoded. The macros can be customized or replaced as needed.
@@ -121,7 +122,7 @@ Post::enableUserstamps();
 
 ## License
 
-Laravel Patcher is open-source software licensed under the **MIT license**.
+Laravel Userstamps is open-source software licensed under the **MIT license**.
 See the [LICENSE.md](LICENSE.md) file for full details.
 
 ---

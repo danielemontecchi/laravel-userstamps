@@ -4,6 +4,9 @@ namespace DanieleMontecchi\LaravelUserstamps\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Schema;
 
 trait HasUserstamps
 {
@@ -12,44 +15,67 @@ trait HasUserstamps
     public static function bootHasUserstamps(): void
     {
         static::creating(function (Model $model) {
-            if (self::$userstampsEnabled && auth()->check() && $model->isFillable('created_by')) {
-                $model->created_by ??= auth()->id();
+            if (self::$userstampsEnabled && Auth::check() && static::hasUserstampColumn($model, 'created_by')) {
+                $model->created_by ??= Auth::id();
+            }
+
+            if (self::$userstampsEnabled && Auth::check() && static::hasUserstampColumn($model, 'updated_by')) {
+                $model->updated_by ??= Auth::id();
             }
         });
 
         static::updating(function (Model $model) {
-            if (self::$userstampsEnabled && auth()->check() && $model->isFillable('updated_by')) {
-                $model->updated_by = auth()->id();
+            if (self::$userstampsEnabled && Auth::check() && static::hasUserstampColumn($model, 'updated_by')) {
+                $model->updated_by = Auth::id();
             }
         });
 
-        static::deleting(function (Model $model) {
-            if (self::$userstampsEnabled && auth()->check() && $model->isFillable('deleted_by')) {
-                $model->deleted_by = auth()->id();
-                $model->save();
+        static::deleted(function (Model $model) {
+            if (
+                self::$userstampsEnabled &&
+                Auth::check() &&
+                static::hasUserstampColumn($model, 'deleted_by') &&
+                method_exists($model, 'isForceDeleting') &&
+                ! $model->isForceDeleting()
+            ) {
+                $model->forceFill(['deleted_by' => Auth::id()])->saveQuietly();
             }
         });
 
         static::restoring(function (Model $model) {
-            if (self::$userstampsEnabled && $model->isFillable('deleted_by')) {
+            if (self::$userstampsEnabled && static::hasUserstampColumn($model, 'deleted_by')) {
                 $model->deleted_by = null;
             }
         });
     }
 
+    protected static function hasUserstampColumn(Model $model, string $column): bool
+    {
+        return Schema::hasColumn($model->getTable(), $column);
+    }
+
     public function creator(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\User::class, 'created_by');
+        return $this->belongsTo(
+            Config::get('auth.providers.users.model', \App\Models\User::class),
+            'created_by'
+        );
     }
 
     public function updater(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\User::class, 'updated_by');
+        return $this->belongsTo(
+            Config::get('auth.providers.users.model', \App\Models\User::class),
+            'updated_by'
+        );
     }
 
     public function destroyer(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\User::class, 'deleted_by');
+        return $this->belongsTo(
+            Config::get('auth.providers.users.model', \App\Models\User::class),
+            'deleted_by'
+        );
     }
 
     public static function disableUserstamps(): void
