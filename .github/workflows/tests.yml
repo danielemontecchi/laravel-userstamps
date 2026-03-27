@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     strategy:
       matrix:
         php: [8.1, 8.2, 8.3, 8.4]
@@ -38,12 +40,12 @@ jobs:
         run: php -d xdebug.mode=coverage vendor/bin/pest --coverage-clover=coverage.xml
 
       - name: SonarCloud analysis
-        if: matrix.php == '8.4' && secrets.SONAR_TOKEN != ''
+        if: matrix.php == '8.4' && env.SONAR_TOKEN != ''
         uses: sonarsource/sonarcloud-github-action@ba3875ecf642b2129de2b589510c81a8b53dbf4e
         with:
           projectBaseDir: .
           organization: danielemontecchi
           projectKey: danielemontecchi_laravel-userstamps
-          token: ${{ secrets.SONAR_TOKEN }}
+          token: ${{ env.SONAR_TOKEN }}
           extraProperties: |
             sonar.php.coverage.reportPaths=coverage.xml
