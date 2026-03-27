@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v4
+        uses: shivammathur/setup-php@44724c9282fa1cf27681d428413c5d235bada07f
         with:
           php-version: ${{ matrix.php }}
           extensions: mbstring, bcmath, xml, pdo, pdo_sqlite, xdebug
@@ -39,7 +39,7 @@ jobs:
 
       - name: SonarCloud analysis
         if: matrix.php == '8.4' && secrets.SONAR_TOKEN != ''
-        uses: sonarsource/sonarcloud-github-action@master
+        uses: sonarsource/sonarcloud-github-action@ba3875ecf642b2129de2b589510c81a8b53dbf4e
         with:
           projectBaseDir: .
           organization: danielemontecchi
