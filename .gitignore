@@ -35,3 +35,6 @@ coverage/
 /composer.lock
 /tests/tmp/
 /coverage/
+
+/.claude/
+*.code-workspace
